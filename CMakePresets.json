@@ -2,7 +2,7 @@
     "version": 8,
     "configurePresets": [
         {
-            "name": "default",
+            "name": "MAVSDK Preset Debug",
             "hidden": false,
             "description": "Default configuration for mavsdk",
             "generator": "Unix Makefiles",
