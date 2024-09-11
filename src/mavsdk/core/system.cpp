@@ -7,7 +7,8 @@
 #include "px4_custom_mode.h"
 
 // Set to 1 to log incoming/outgoing mavlink messages.
-#define MESSAGE_DEBUGGING 0
+#define MESSAGE_DEBUGGING 1
+
 
 namespace mavsdk {
 

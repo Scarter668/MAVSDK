@@ -85,19 +85,19 @@ public:
     std::pair<Action::Result, float> get_takeoff_altitude() const;
 
     void
-    set_maximum_speed_async(const float speed_m_s, const Action::ResultCallback& callback) const;
+    set_maximum_speed_async(const int speed_m_s, const Action::ResultCallback& callback) const;
     void get_maximum_speed_async(const Action::GetMaximumSpeedCallback& callback) const;
 
-    Action::Result set_maximum_speed(float speed_m_s) const;
-    std::pair<Action::Result, float> get_maximum_speed() const;
+    Action::Result set_maximum_speed(int speed_m_s) const;
+    std::pair<Action::Result, int> get_maximum_speed() const;
 
     void set_return_to_launch_altitude_async(
         const float relative_altitude_m, const Action::ResultCallback& callback) const;
     void get_return_to_launch_altitude_async(
         const Action::GetReturnToLaunchAltitudeCallback& callback) const;
 
-    void set_current_speed_async(float speed_m_s, const Action::ResultCallback& callback);
-    Action::Result set_current_speed(float speed_m_s);
+    void set_current_speed_async(int speed_m_s, const Action::ResultCallback& callback);
+    Action::Result set_current_speed(int speed_m_s);
 
     Action::Result set_return_to_launch_altitude(const float relative_altitude_m) const;
     std::pair<Action::Result, float> get_return_to_launch_altitude() const;
@@ -126,9 +126,9 @@ private:
     float _takeoff_altitude{2.0};
 
     static constexpr uint8_t VEHICLE_MODE_FLAG_CUSTOM_MODE_ENABLED = 1;
-    static constexpr auto TAKEOFF_ALT_PARAM = "MIS_TAKEOFF_ALT";
-    static constexpr auto MAX_SPEED_PARAM = "MPC_XY_CRUISE";
-    static constexpr auto RTL_RETURN_ALTITUDE_PARAM = "RTL_RETURN_ALT";
+    static constexpr auto TAKEOFF_ALT_PARAM = "TKOFF_ALT";
+    static constexpr auto MAX_SPEED_PARAM = "AIRSPEED_MAX";
+    static constexpr auto RTL_RETURN_ALTITUDE_PARAM = "RTL_ALTITUDE";
 };
 
 } // namespace mavsdk

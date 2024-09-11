@@ -717,15 +717,15 @@ std::pair<Action::Result, float> ActionImpl::get_takeoff_altitude() const
 }
 
 void ActionImpl::set_maximum_speed_async(
-    const float speed_m_s, const Action::ResultCallback& callback) const
+    const int speed_m_s, const Action::ResultCallback& callback) const
 {
     callback(set_maximum_speed(speed_m_s));
 }
 
-Action::Result ActionImpl::set_maximum_speed(float speed_m_s) const
+Action::Result ActionImpl::set_maximum_speed(int speed_m_s) const
 {
     const MavlinkParameterClient::Result result =
-        _system_impl->set_param_float(MAX_SPEED_PARAM, speed_m_s);
+        _system_impl->set_param_int(MAX_SPEED_PARAM, speed_m_s);
     return (result == MavlinkParameterClient::Result::Success) ? Action::Result::Success :
                                                                  Action::Result::ParameterError;
 }
@@ -736,9 +736,9 @@ void ActionImpl::get_maximum_speed_async(const Action::GetMaximumSpeedCallback& 
     callback(speed_result.first, speed_result.second);
 }
 
-std::pair<Action::Result, float> ActionImpl::get_maximum_speed() const
+std::pair<Action::Result,int> ActionImpl::get_maximum_speed() const
 {
-    auto result = _system_impl->get_param_float(MAX_SPEED_PARAM);
+    auto result = _system_impl->get_param_int(MAX_SPEED_PARAM);
     return std::make_pair<>(
         (result.first == MavlinkParameterClient::Result::Success) ? Action::Result::Success :
                                                                     Action::Result::ParameterError,
@@ -775,7 +775,7 @@ std::pair<Action::Result, float> ActionImpl::get_return_to_launch_altitude() con
         result.second);
 }
 
-void ActionImpl::set_current_speed_async(float speed_m_s, const Action::ResultCallback& callback)
+void ActionImpl::set_current_speed_async(int speed_m_s, const Action::ResultCallback& callback)
 {
     MavlinkCommandSender::CommandLong command{};
 
@@ -787,12 +787,12 @@ void ActionImpl::set_current_speed_async(float speed_m_s, const Action::ResultCa
     command.target_component_id = _system_impl->get_autopilot_id();
 
     _system_impl->send_command_async(
-        command, [this, callback](MavlinkCommandSender::Result result, float) {
+        command, [this, callback](MavlinkCommandSender::Result result, int) {
             command_result_callback(result, callback);
         });
 }
 
-Action::Result ActionImpl::set_current_speed(float speed_m_s)
+Action::Result ActionImpl::set_current_speed(int speed_m_s)
 {
     auto prom = std::promise<Action::Result>();
     auto fut = prom.get_future();

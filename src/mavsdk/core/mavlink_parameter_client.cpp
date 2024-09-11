@@ -325,16 +325,22 @@ MavlinkParameterClient::get_param(const std::string& name)
     return res.get();
 }
 
-std::pair<MavlinkParameterClient::Result, int32_t>
+
+// Modified to int from int32_t by Steve Nomeny on 2021-07-07 to support get param for ardupilot
+std::pair<MavlinkParameterClient::Result, int>
 MavlinkParameterClient::get_param_int(const std::string& name)
 {
-    auto prom = std::promise<std::pair<Result, int32_t>>();
-    auto res = prom.get_future();
-    get_param_int_async(
-        name,
-        [&prom](Result result, int32_t value) { prom.set_value(std::make_pair<>(result, value)); },
-        this);
-    return res.get();
+    std::pair<MavlinkParameterClient::Result, int> answer;
+    auto result = get_param(name);
+    auto value = result.second.get_int();
+    if ( (result.first == Result::Success) && value.has_value()) {
+        // Use the value if present
+        answer = std::make_pair(Result::Success, value.value());
+    } else {
+        // Use -1 or another default value if the optional is empty
+        answer = std::make_pair(result.first, -1);
+    }
+    return answer;
 }
 
 std::pair<MavlinkParameterClient::Result, float>

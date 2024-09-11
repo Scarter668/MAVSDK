@@ -181,8 +181,9 @@ public:
 
     /**
      * @brief Request param (int).
+     * @brief Modified to int from int32_t by Steve Nomeny on 2021-07-07 to support get param for ardupilot
      */
-    std::pair<Result, int32_t> get_param_int(
+    std::pair<Result, int> get_param_int(
         const std::string& name, std::optional<uint8_t> maybe_component_id, bool extended);
 
     /**

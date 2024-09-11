@@ -26,3 +26,7 @@ cmake-build-*
 # mavlink repo to generate mavlink-headers
 mavlink
 mavlink-headers
+
+
+# log files
+*.log

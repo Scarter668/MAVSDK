@@ -32,7 +32,8 @@ public:
         const uint8_t target_compid,
         const uint16_t command,
         MAV_RESULT result);
-    std::pair<MavlinkPassthrough::Result, int32_t> get_param_int(
+    // Modified to int from int32_t by Steve Nomeny on 2021-07-07 to support get param for ardupilot
+    std::pair<MavlinkPassthrough::Result, int> get_param_int(
         const std::string& name, std::optional<uint8_t> maybe_component_id, bool extended);
     std::pair<MavlinkPassthrough::Result, float> get_param_float(
         const std::string& name, std::optional<uint8_t> maybe_component_id, bool extended);

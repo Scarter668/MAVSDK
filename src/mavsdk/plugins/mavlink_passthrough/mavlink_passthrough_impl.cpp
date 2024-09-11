@@ -114,7 +114,8 @@ mavlink_message_t MavlinkPassthroughImpl::make_command_ack_message(
     return msg;
 }
 
-std::pair<MavlinkPassthrough::Result, int32_t> MavlinkPassthroughImpl::get_param_int(
+// Modified to int from int32_t by Steve Nomeny on 2021-07-07 to support get param for ardupilot
+std::pair<MavlinkPassthrough::Result, int> MavlinkPassthroughImpl::get_param_int(
     const std::string& name, std::optional<uint8_t> maybe_component_id, bool extended)
 {
     auto result = _system_impl->get_param_int(name, maybe_component_id, extended);
