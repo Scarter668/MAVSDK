@@ -28,5 +28,5 @@ mavlink
 mavlink-headers
 
 
-# log files
+# All log files
 *.log
