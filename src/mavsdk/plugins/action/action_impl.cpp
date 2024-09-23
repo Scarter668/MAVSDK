@@ -476,7 +476,7 @@ void ActionImpl::goto_location_async(
 
             command.command = MAV_CMD_DO_REPOSITION;
             command.target_component_id = _system_impl->get_autopilot_id();
-            command.frame = MAV_FRAME_GLOBAL_INT;
+            command.frame = MAV_FRAME_GLOBAL;
             command.params.maybe_param4 = static_cast<float>(to_rad_from_deg(yaw_deg));
             command.params.x = int32_t(std::round(latitude_deg * 1e7));
             command.params.y = int32_t(std::round(longitude_deg * 1e7));
@@ -492,7 +492,7 @@ void ActionImpl::goto_location_async(
     if (_system_impl->autopilot() == Autopilot::Px4) {
         goto_flight_mode = FlightMode::Hold;
     } else {
-        goto_flight_mode = FlightMode::Offboard;
+        goto_flight_mode = FlightMode::Offboard; // Guided on ArduPilot
     }
     if (_system_impl->get_flight_mode() != goto_flight_mode) {
         _system_impl->set_flight_mode_async(

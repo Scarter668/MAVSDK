@@ -86,22 +86,26 @@ public:
      * https://docs.px4.io/master/en/config/flight_mode.html.
      */
     enum class FlightMode {
-        Unknown, /**< @brief Mode not known. */
-        Ready, /**< @brief Armed and ready to take off. */
-        Takeoff, /**< @brief Taking off. */
-        Hold, /**< @brief Holding (hovering in place (or circling for fixed-wing vehicles). */
-        Mission, /**< @brief In mission. */
-        ReturnToLaunch, /**< @brief Returning to launch position (then landing). */
-        Land, /**< @brief Landing. */
-        Offboard, /**< @brief In 'offboard' mode. */
-        FollowMe, /**< @brief In 'follow-me' mode. */
-        Manual, /**< @brief In 'Manual' mode. */
-        Altctl, /**< @brief In 'Altitude Control' mode. */
-        Posctl, /**< @brief In 'Position Control' mode. */
-        Acro, /**< @brief In 'Acro' mode. */
-        Stabilized, /**< @brief In 'Stabilize' mode. */
-        Rattitude, /**< @brief In 'Rattitude' mode. */
+        Unknown,           /**< @brief Mode not known. */
+        Ready,             /**< @brief Armed and ready to take off. */
+        Takeoff,           /**< @brief Taking off. */
+        Hold,              /**< @brief Holding (hovering in place or circling for fixed-wing vehicles). */
+        Mission,           /**< @brief Executing mission commands. */
+        ReturnToLaunch,    /**< @brief Returning to the launch position (then landing). */
+        Land,              /**< @brief Landing. */
+        Offboard,          /**< @brief In 'Offboard' mode where control is given to an external system. */
+        FollowMe,          /**< @brief In 'Follow-me' mode. */
+        Manual,            /**< @brief In 'Manual' mode where the pilot has direct control. */
+        Altctl,            /**< @brief In 'Altitude Control' mode. */
+        Posctl,            /**< @brief In 'Position Control' mode. */
+        Acro,              /**< @brief In 'Acro' mode (acrobatic mode for drones). */
+        Stabilized,        /**< @brief In 'Stabilize' mode. */
+        Rattitude,         /**< @brief In 'Rattitude' mode, combining stabilized and acrobatic modes. */
+        FBWA,              /**< @brief In 'FBWA' (Fly By Wire A) mode for fixed-wing aircraft. */
+        Autotune,          /**< @brief In 'Autotune' mode, used for tuning the flight controller. */
+        Guided             /**< @brief In 'Guided' mode, where commands are given by an external system like a ground control station. */
     };
+
 
     /**
      * @brief Stream operator to print information about a `Telemetry::FlightMode`.

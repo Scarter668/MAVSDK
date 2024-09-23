@@ -11,7 +11,10 @@
 #else
 #include <iostream>
 #include <ctime>
+#include <fstream>  // Include for std::ofstream
 #endif
+
+
 
 #if !defined(WINDOWS)
 // Remove path and extract only filename.
@@ -31,6 +34,27 @@
 namespace mavsdk {
 
 static std::mutex log_mutex_{};
+
+static std::ofstream log_file;  // File stream for logging
+
+// Function to set the log file
+inline void set_log_file(const std::string& file_path) {
+    std::lock_guard<std::mutex> lock(log_mutex_);
+    log_file.open(file_path, std::ios::out | std::ios::app);  // Open file in append mode
+    if (!log_file.is_open()) {
+        std::cout << "Failed to open log file: " << file_path << std::endl;
+    }
+    std::cout << "Opened log file: " << file_path << std::endl;
+}
+// Function that returns the appropriate output stream (log_file or std::cout)
+inline std::ostream& get_log_stream() {
+    std::lock_guard<std::mutex> lock(log_mutex_);
+    if (log_file.is_open()) {
+        return log_file;
+    } else {
+        return std::cout;
+    }
+}
 
 std::ostream& operator<<(std::ostream& os, std::byte b);
 
@@ -108,29 +132,30 @@ public:
         struct tm* timeinfo = localtime(&rawtime);
         char time_buffer[10]{}; // We need 8 characters + \0
         strftime(time_buffer, sizeof(time_buffer), "%I:%M:%S", timeinfo);
-        std::cout << "[" << time_buffer;
+        get_log_stream() << "[" << time_buffer;
 
         switch (_log_level) {
             case log::Level::Debug:
-                std::cout << "|Debug] ";
+                get_log_stream() << "|Debug] ";
                 break;
             case log::Level::Info:
-                std::cout << "|Info ] ";
+                get_log_stream() << "|Info ] ";
                 break;
             case log::Level::Warn:
-                std::cout << "|Warn ] ";
+                get_log_stream() << "|Warn ] ";
                 break;
             case log::Level::Err:
-                std::cout << "|Error] ";
+                get_log_stream() << "|Error] ";
                 break;
         }
 
         set_color(Color::Reset);
 
-        std::cout << _s.str();
-        std::cout << " (" << _caller_filename << ":" << std::dec << _caller_filenumber << ")";
+        get_log_stream() << _s.str();
+        get_log_stream() << " (" << _caller_filename << ":" << std::dec << _caller_filenumber << ")";
 
-        std::cout << '\n';
+        get_log_stream() << '\n';
+        get_log_stream().flush();
 #endif
     }
 

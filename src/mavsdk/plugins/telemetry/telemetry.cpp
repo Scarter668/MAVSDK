@@ -1572,9 +1572,9 @@ std::ostream& operator<<(std::ostream& str, Telemetry::FlightMode const& flight_
         case Telemetry::FlightMode::Takeoff:
             return str << "Takeoff";
         case Telemetry::FlightMode::Hold:
-            return str << "Hold";
+            return str << "Hold | Loiter";
         case Telemetry::FlightMode::Mission:
-            return str << "Mission";
+            return str << "Mission | Auto";
         case Telemetry::FlightMode::ReturnToLaunch:
             return str << "Return To Launch";
         case Telemetry::FlightMode::Land:
@@ -1595,10 +1595,17 @@ std::ostream& operator<<(std::ostream& str, Telemetry::FlightMode const& flight_
             return str << "Stabilized";
         case Telemetry::FlightMode::Rattitude:
             return str << "Rattitude";
+        case Telemetry::FlightMode::FBWA:
+            return str << "FBWA";            // Add FBWA mode description
+        case Telemetry::FlightMode::Autotune:
+            return str << "Autotune";        // Add Autotune mode description
+        case Telemetry::FlightMode::Guided:
+            return str << "Guided";          // Add Guided mode description
         default:
             return str << "Unknown";
     }
 }
+
 
 std::ostream& operator<<(std::ostream& str, Telemetry::StatusTextType const& status_text_type)
 {

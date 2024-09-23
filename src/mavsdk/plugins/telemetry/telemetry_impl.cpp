@@ -1777,10 +1777,17 @@ Telemetry::FlightMode TelemetryImpl::telemetry_flight_mode_from_flight_mode(Flig
             return Telemetry::FlightMode::Acro;
         case FlightMode::Stabilized:
             return Telemetry::FlightMode::Stabilized;
+        case FlightMode::FBWA:
+            return Telemetry::FlightMode::FBWA;  // Map to corresponding telemetry mode
+        case FlightMode::Autotune:
+            return Telemetry::FlightMode::Autotune;  // Map to corresponding telemetry mode
+        case FlightMode::Guided:
+            return Telemetry::FlightMode::Guided;  // Map to corresponding telemetry mode
         default:
             return Telemetry::FlightMode::Unknown;
     }
 }
+
 
 void TelemetryImpl::receive_param_cal_gyro(MavlinkParameterClient::Result result, int value)
 {
