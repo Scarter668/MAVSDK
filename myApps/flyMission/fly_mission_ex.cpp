@@ -86,13 +86,21 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    Mavsdk mavsdk{Mavsdk::Configuration{Mavsdk::ComponentType::GroundStation}};
+    std::cout << "url: " << argv[1] << std::endl;
+
+    mavsdk::Mavsdk mavsdk{Mavsdk::Configuration{Mavsdk::ComponentType::GroundStation}};
+
+    std::cout << "Waiting to discover system...\n";
+
     ConnectionResult connection_result = mavsdk.add_any_connection(argv[1]);
+
 
     if (connection_result != ConnectionResult::Success) {
         std::cerr << "Connection failed: " << connection_result << '\n';
         return 1;
     }
+
+    std::cout << "Connected\n";
 
      auto system = mavsdk.first_autopilot(3.0);
     if (!system) {
@@ -165,7 +173,7 @@ int main(int argc, char** argv)
      * because we should allow autopilot to initialize all its systems
      */
     std::cout << "Waiting for system to be armable...\n";
-    wait_armable(is_armable);
+    // wait_armable(is_armable);
 
     auto clear_result = mission_raw.clear_mission();
     if (clear_result != MissionRaw::Result::Success) {
