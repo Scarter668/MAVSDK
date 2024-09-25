@@ -545,14 +545,16 @@ public:
     /**
      * @brief Callback type for get_maximum_speed_async.
      */
-    using GetMaximumSpeedCallback = std::function<void(Result, float)>;
+    using GetSpeedCallback = std::function<void(Result, float)>;
 
     /**
      * @brief Get the vehicle maximum speed (in metres/second).
      *
      * This function is non-blocking. See 'get_maximum_speed' for the blocking counterpart.
      */
-    void get_maximum_speed_async(const GetMaximumSpeedCallback callback);
+    void get_maximum_speed_async(const GetSpeedCallback callback);
+
+
 
     /**
      * @brief Get the vehicle maximum speed (in metres/second).
@@ -562,6 +564,22 @@ public:
      * @return Result of request.
      */
     std::pair<Result, float> get_maximum_speed() const;
+
+     /**
+     * @brief Get the vehicle minimum speed (in metres/second).
+     *
+     * This function is non-blocking. See 'get_minimum_speed' for the blocking counterpart.
+     */
+    void get_minimum_speed_async(const GetSpeedCallback callback);
+    
+    /**
+     * @brief Get the vehicle minimum speed (in metres/second).
+     *
+     * This function is blocking. See 'get_minimum_speed_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    std::pair<Result, float> get_minimum_speed() const;
 
     /**
      * @brief Set vehicle maximum speed (in metres/second).
@@ -578,6 +596,54 @@ public:
      * @return Result of request.
      */
     Result set_maximum_speed(float speed) const;
+    
+    /**
+     * @brief Set vehicle minimum speed (in metres/second).
+     *
+     * This function is non-blocking. See 'set_minimum_speed' for the blocking counterpart.
+     */
+    void set_minimum_speed_async(float speed, const ResultCallback callback);
+
+    /**
+     * @brief Set vehicle minimum speed (in metres/second).
+     *
+     * This function is blocking. See 'set_minimum_speed_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result set_minimum_speed(float speed) const;
+
+    /**
+     * @brief Set vehicle target speed (in metres/second).
+     *
+     * This function is non-blocking. See 'set_target_speed' for the blocking counterpart.
+     */
+    void set_target_speed_async(float speed, const ResultCallback callback);
+
+    /**
+     * @brief Set vehicle target speed (in metres/second).
+     *
+     * This function is blocking. See 'set_target_speed_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result set_target_speed(float speed) const;
+
+     /**
+     * @brief Get the vehicle target speed (in metres/second).
+     *
+     * This function is non-blocking. See 'get_target_speed' for the blocking counterpart.
+     */
+    void get_target_speed_async(const GetSpeedCallback callback);
+    
+    /**
+     * @brief Get the vehicle target speed (in metres/second).
+     *
+     * This function is blocking. See 'get_target_speed_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    std::pair<Result, float> get_target_speed() const;
 
     /**
      * @brief Callback type for get_return_to_launch_altitude_async.

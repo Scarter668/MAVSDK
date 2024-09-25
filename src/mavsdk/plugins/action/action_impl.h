@@ -86,10 +86,24 @@ public:
 
     void
     set_maximum_speed_async(const int speed_m_s, const Action::ResultCallback& callback) const;
-    void get_maximum_speed_async(const Action::GetMaximumSpeedCallback& callback) const;
+    void get_maximum_speed_async(const Action::GetSpeedCallback& callback) const;
 
     Action::Result set_maximum_speed(int speed_m_s) const;
     std::pair<Action::Result, int> get_maximum_speed() const;
+
+    void
+    set_minimum_speed_async(const int speed_m_s, const Action::ResultCallback& callback) const;
+    void get_minimum_speed_async(const Action::GetSpeedCallback& callback) const;
+
+    Action::Result set_minimum_speed(int speed_m_s) const;
+    std::pair<Action::Result, int> get_minimum_speed() const;
+
+    void
+    set_target_speed_async(const int speed_m_s, const Action::ResultCallback& callback) const;
+    void get_target_speed_async(const Action::GetSpeedCallback& callback) const;
+
+    Action::Result set_target_speed(int speed_m_s) const;
+    std::pair<Action::Result, float> get_target_speed() const;
 
     void set_return_to_launch_altitude_async(
         const float relative_altitude_m, const Action::ResultCallback& callback) const;
@@ -127,8 +141,14 @@ private:
 
     static constexpr uint8_t VEHICLE_MODE_FLAG_CUSTOM_MODE_ENABLED = 1;
     static constexpr auto TAKEOFF_ALT_PARAM = "TKOFF_ALT";
-    static constexpr auto MAX_SPEED_PARAM = "AIRSPEED_MAX";
-    static constexpr auto RTL_RETURN_ALTITUDE_PARAM = "RTL_ALTITUDE";
+    static constexpr auto MAX_SPEED_PARAM = "ARSPD_FBW_MAX";
+    static constexpr auto MIN_SPEED_PARAM = "ARSPD_FBW_MIN";
+    
+    static constexpr auto TARGET_SPEED_PARAM = "TRIM_ARSPD_CM";
+    static constexpr float TARGET_SPEED_CONVERSION_TO_CM_S = 100.0;
+    
+
+    static constexpr auto RTL_RETURN_ALTITUDE_PARAM = "ALT_HOLD_RTL";
 };
 
 } // namespace mavsdk

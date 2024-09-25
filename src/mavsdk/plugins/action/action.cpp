@@ -225,7 +225,7 @@ Action::Result Action::set_takeoff_altitude(float altitude) const
     return _impl->set_takeoff_altitude(altitude);
 }
 
-void Action::get_maximum_speed_async(const GetMaximumSpeedCallback callback)
+void Action::get_maximum_speed_async(const GetSpeedCallback callback)
 {
     _impl->get_maximum_speed_async(callback);
 }
@@ -234,7 +234,6 @@ std::pair<Action::Result, float> Action::get_maximum_speed() const
 {
     return _impl->get_maximum_speed();
 }
-
 void Action::set_maximum_speed_async(float speed, const ResultCallback callback)
 {
     _impl->set_maximum_speed_async(speed, callback);
@@ -244,6 +243,47 @@ Action::Result Action::set_maximum_speed(float speed) const
 {
     return _impl->set_maximum_speed(speed);
 }
+
+void Action::get_minimum_speed_async(const GetSpeedCallback callback)
+{
+    _impl->get_minimum_speed_async(callback);
+}
+
+std::pair<Action::Result, float> Action::get_minimum_speed() const
+{
+    return _impl->get_minimum_speed();
+}
+
+void Action::set_minimum_speed_async(float speed, const ResultCallback callback)
+{
+    _impl->set_minimum_speed_async(speed, callback);
+}
+
+Action::Result Action::set_minimum_speed(float speed) const
+{
+    return _impl->set_minimum_speed(speed);
+}
+
+void Action::get_target_speed_async(const GetSpeedCallback callback)
+{
+    _impl->get_target_speed_async(callback);
+}
+
+std::pair<Action::Result, float> Action::get_target_speed() const
+{
+    return _impl->get_target_speed();
+}
+
+void Action::set_target_speed_async(float speed, const ResultCallback callback)
+{
+    _impl->set_target_speed_async(speed, callback);
+}
+
+Action::Result Action::set_target_speed(float speed) const
+{
+    return _impl->set_target_speed(speed);
+}
+
 
 void Action::get_return_to_launch_altitude_async(const GetReturnToLaunchAltitudeCallback callback)
 {

@@ -730,7 +730,7 @@ Action::Result ActionImpl::set_maximum_speed(int speed_m_s) const
                                                                  Action::Result::ParameterError;
 }
 
-void ActionImpl::get_maximum_speed_async(const Action::GetMaximumSpeedCallback& callback) const
+void ActionImpl::get_maximum_speed_async(const Action::GetSpeedCallback& callback) const
 {
     auto speed_result = get_maximum_speed();
     callback(speed_result.first, speed_result.second);
@@ -739,6 +739,64 @@ void ActionImpl::get_maximum_speed_async(const Action::GetMaximumSpeedCallback& 
 std::pair<Action::Result,int> ActionImpl::get_maximum_speed() const
 {
     auto result = _system_impl->get_param_int(MAX_SPEED_PARAM);
+    return std::make_pair<>(
+        (result.first == MavlinkParameterClient::Result::Success) ? Action::Result::Success :
+                                                                    Action::Result::ParameterError,
+        result.second);
+}
+
+void ActionImpl::set_minimum_speed_async(
+    const int speed_m_s, const Action::ResultCallback& callback) const
+{
+    callback(set_minimum_speed(speed_m_s));
+}
+
+Action::Result ActionImpl::set_minimum_speed(int speed_m_s) const
+{
+    const MavlinkParameterClient::Result result =
+        _system_impl->set_param_int(MIN_SPEED_PARAM, speed_m_s);
+    return (result == MavlinkParameterClient::Result::Success) ? Action::Result::Success :
+                                                                 Action::Result::ParameterError;
+}
+
+void ActionImpl::get_minimum_speed_async(const Action::GetSpeedCallback& callback) const
+{
+    auto speed_result = get_minimum_speed();
+    callback(speed_result.first, speed_result.second);
+}
+
+std::pair<Action::Result,int> ActionImpl::get_minimum_speed() const
+{
+    auto result = _system_impl->get_param_int(MIN_SPEED_PARAM);
+    return std::make_pair<>(
+        (result.first == MavlinkParameterClient::Result::Success) ? Action::Result::Success :
+                                                                    Action::Result::ParameterError,
+        result.second);
+}
+
+void ActionImpl::set_target_speed_async(
+    const int speed_m_s, const Action::ResultCallback& callback) const
+{
+    callback(set_target_speed(speed_m_s));
+}
+
+Action::Result ActionImpl::set_target_speed(int speed_m_s) const
+{
+    const MavlinkParameterClient::Result result =
+        _system_impl->set_param_int(TARGET_SPEED_PARAM, std::round(speed_m_s * TARGET_SPEED_CONVERSION_TO_CM_S));
+    return (result == MavlinkParameterClient::Result::Success) ? Action::Result::Success :
+                                                                 Action::Result::ParameterError;
+}
+
+void ActionImpl::get_target_speed_async(const Action::GetSpeedCallback& callback) const
+{
+    auto speed_result = get_target_speed();
+    callback(speed_result.first, speed_result.second / TARGET_SPEED_CONVERSION_TO_CM_S);
+}
+
+std::pair<Action::Result,float> ActionImpl::get_target_speed() const
+{
+    auto result = _system_impl->get_param_int(TARGET_SPEED_PARAM);
     return std::make_pair<>(
         (result.first == MavlinkParameterClient::Result::Success) ? Action::Result::Success :
                                                                     Action::Result::ParameterError,
