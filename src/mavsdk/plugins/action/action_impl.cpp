@@ -800,7 +800,7 @@ std::pair<Action::Result,float> ActionImpl::get_target_speed() const
     return std::make_pair<>(
         (result.first == MavlinkParameterClient::Result::Success) ? Action::Result::Success :
                                                                     Action::Result::ParameterError,
-        result.second);
+        result.second / TARGET_SPEED_CONVERSION_TO_CM_S);
 }
 
 void ActionImpl::set_return_to_launch_altitude_async(
