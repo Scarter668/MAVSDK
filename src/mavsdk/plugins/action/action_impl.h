@@ -141,14 +141,13 @@ private:
 
     static constexpr uint8_t VEHICLE_MODE_FLAG_CUSTOM_MODE_ENABLED = 1;
     static constexpr auto TAKEOFF_ALT_PARAM = "TKOFF_ALT";
-    static constexpr auto MAX_SPEED_PARAM = "ARSPD_FBW_MAX";
-    static constexpr auto MIN_SPEED_PARAM = "ARSPD_FBW_MIN";
+    static constexpr auto MAX_SPEED_PARAM = "AIRSPEED_MAX"; // range 5 - 100
+    static constexpr auto MIN_SPEED_PARAM = "AIRSPEED_MIN"; // range 5 - 100
     
-    static constexpr auto TARGET_SPEED_PARAM = "TRIM_ARSPD_CM";
-    static constexpr float TARGET_SPEED_CONVERSION_TO_CM_S = 100.0;
+    static constexpr auto TARGET_SPEED_PARAM = "AIRSPEED_CRUISE"; // m/s
     
 
-    static constexpr auto RTL_RETURN_ALTITUDE_PARAM = "ALT_HOLD_RTL";
+    static constexpr auto RTL_RETURN_ALTITUDE_PARAM = "RTL_ALTITUDE"; // m
 };
 
 } // namespace mavsdk

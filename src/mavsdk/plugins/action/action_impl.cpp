@@ -707,7 +707,7 @@ std::pair<Action::Result, float> ActionImpl::get_takeoff_altitude() const
     if (_system_impl->autopilot() == Autopilot::ArduPilot) {
         return std::make_pair<>(Action::Result::Success, _takeoff_altitude);
     } else {
-        auto result = _system_impl->get_param_float(TAKEOFF_ALT_PARAM);
+        auto result = _system_impl->get_param_int(TAKEOFF_ALT_PARAM);
         return std::make_pair<>(
             (result.first == MavlinkParameterClient::Result::Success) ?
                 Action::Result::Success :
@@ -783,7 +783,7 @@ void ActionImpl::set_target_speed_async(
 Action::Result ActionImpl::set_target_speed(int speed_m_s) const
 {
     const MavlinkParameterClient::Result result =
-        _system_impl->set_param_int(TARGET_SPEED_PARAM, std::round(speed_m_s * TARGET_SPEED_CONVERSION_TO_CM_S));
+        _system_impl->set_param_int(TARGET_SPEED_PARAM, speed_m_s);
     return (result == MavlinkParameterClient::Result::Success) ? Action::Result::Success :
                                                                  Action::Result::ParameterError;
 }
@@ -791,16 +791,16 @@ Action::Result ActionImpl::set_target_speed(int speed_m_s) const
 void ActionImpl::get_target_speed_async(const Action::GetSpeedCallback& callback) const
 {
     auto speed_result = get_target_speed();
-    callback(speed_result.first, speed_result.second / TARGET_SPEED_CONVERSION_TO_CM_S);
+    callback(speed_result.first, speed_result.second );
 }
 
 std::pair<Action::Result,float> ActionImpl::get_target_speed() const
 {
-    auto result = _system_impl->get_param_int(TARGET_SPEED_PARAM);
+    auto result = _system_impl->get_param_float(TARGET_SPEED_PARAM);
     return std::make_pair<>(
         (result.first == MavlinkParameterClient::Result::Success) ? Action::Result::Success :
                                                                     Action::Result::ParameterError,
-        result.second / TARGET_SPEED_CONVERSION_TO_CM_S);
+        result.second);
 }
 
 void ActionImpl::set_return_to_launch_altitude_async(
