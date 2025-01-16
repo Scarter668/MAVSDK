@@ -545,6 +545,26 @@ void ActionImpl::hold_async(const Action::ResultCallback& callback) const
         });
 }
 
+Action::Result ActionImpl::set_flight_mode_auto() const
+{
+    auto prom = std::promise<Action::Result>();
+    auto fut = prom.get_future();
+
+    mavsdk::MavlinkCommandSender::Result command_result = _system_impl->set_flight_mode(FlightMode::Mission); // Mission is the ardupilot auto mode 
+    
+    return action_result_from_command_result(command_result);
+}
+
+Action::Result ActionImpl::set_flight_mode_guided() const
+{
+    auto prom = std::promise<Action::Result>();
+    auto fut = prom.get_future();
+
+    mavsdk::MavlinkCommandSender::Result command_result = _system_impl->set_flight_mode(FlightMode::Offboard); // Offboard is the ardupilot guided mode
+    
+    return action_result_from_command_result(command_result);
+}
+
 void ActionImpl::set_actuator_async(
     const int index, const float value, const Action::ResultCallback& callback)
 {

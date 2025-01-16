@@ -943,6 +943,7 @@ ardupilot::PlaneMode SystemImpl::flight_mode_to_ardupilot_plane_mode(FlightMode 
         case FlightMode::Stabilized:
             return ardupilot::PlaneMode::Stabilize;
         case FlightMode::Offboard:
+        case FlightMode::Guided:
             return ardupilot::PlaneMode::Guided;
         case FlightMode::Unknown:
             return ardupilot::PlaneMode::Unknown;

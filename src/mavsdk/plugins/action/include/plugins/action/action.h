@@ -435,6 +435,10 @@ public:
      */
     Result hold() const;
 
+
+    //Blocking 
+    Action::Result set_flight_mode_auto() const;
+    Action::Result set_flight_mode_guided() const;
     /**
      * @brief Send command to set the value of an actuator.
      *

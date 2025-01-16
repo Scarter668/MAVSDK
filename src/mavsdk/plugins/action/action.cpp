@@ -175,6 +175,14 @@ Action::Result Action::hold() const
     return _impl->hold();
 }
 
+//Blocking 
+Action::Result Action::set_flight_mode_auto() const{
+    _impl->set_flight_mode_auto();
+}
+Action::Result Action::set_flight_mode_guided() const {
+    _impl->set_flight_mode_guided();
+}
+
 void Action::set_actuator_async(int32_t index, float value, const ResultCallback callback)
 {
     _impl->set_actuator_async(index, value, callback);

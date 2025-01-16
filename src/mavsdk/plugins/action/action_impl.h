@@ -47,6 +47,10 @@ public:
     Action::Result transition_to_fixedwing() const;
     Action::Result transition_to_multicopter() const;
 
+    //Blocking 
+    Action::Result set_flight_mode_auto() const;
+    Action::Result set_flight_mode_guided() const;
+
     void arm_async(const Action::ResultCallback& callback) const;
     void arm_force_async(const Action::ResultCallback& callback) const;
     void disarm_async(const Action::ResultCallback& callback) const;
