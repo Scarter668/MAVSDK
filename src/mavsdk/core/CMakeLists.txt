@@ -167,7 +167,7 @@ install(FILES
     include/mavsdk/geometry.h
     include/mavsdk/server_component.h
     include/mavsdk/mavlink_address.h
-    cli_arg.h
+    cli_arg.h                       # Export to use in pArduBridge
     log.h
     ${CMAKE_CURRENT_BINARY_DIR}/include/mavsdk/mavlink_include.h
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/mavsdk"

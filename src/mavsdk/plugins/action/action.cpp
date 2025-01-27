@@ -9,6 +9,18 @@
 
 namespace mavsdk {
 
+
+void Action::send_command_async( const MavlinkPassthrough::CommandLong& command, const ResultCallback& callback) const{
+
+    _impl->send_command_async(command, callback);
+}   
+
+void Action::send_command_async( const MavlinkPassthrough::CommandInt& command, const ResultCallback& callback) const {
+
+    _impl->send_command_async(command, callback);
+}
+
+
 Action::Action(System& system) : PluginBase(), _impl{std::make_unique<ActionImpl>(system)} {}
 
 Action::Action(std::shared_ptr<System> system) :
@@ -177,10 +189,10 @@ Action::Result Action::hold() const
 
 //Blocking 
 Action::Result Action::set_flight_mode_auto() const{
-    _impl->set_flight_mode_auto();
+   return _impl->set_flight_mode_auto();
 }
 Action::Result Action::set_flight_mode_guided() const {
-    _impl->set_flight_mode_guided();
+    return _impl->set_flight_mode_guided();
 }
 
 void Action::set_actuator_async(int32_t index, float value, const ResultCallback callback)

@@ -870,6 +870,7 @@ void ActionImpl::set_current_speed_async(int speed_m_s, const Action::ResultCall
         });
 }
 
+
 Action::Result ActionImpl::set_current_speed(int speed_m_s)
 {
     auto prom = std::promise<Action::Result>();
@@ -878,6 +879,47 @@ Action::Result ActionImpl::set_current_speed(int speed_m_s)
     set_current_speed_async(speed_m_s, [&prom](Action::Result result) { prom.set_value(result); });
 
     return fut.get();
+}
+
+void ActionImpl::send_command_async( const MavlinkPassthrough::CommandLong& command, const Action::ResultCallback& callback) const{
+    
+    MavlinkCommandSender::CommandLong cmd{};
+    cmd.target_system_id = command.target_sysid;
+    cmd.target_component_id = command.target_compid;
+    cmd.command = command.command;
+    cmd.params.maybe_param1 = command.param1; 
+    cmd.params.maybe_param2 = command.param2;
+    cmd.params.maybe_param3 = command.param3;
+    cmd.params.maybe_param4 = command.param4;
+    cmd.params.maybe_param5 = command.param5;
+    cmd.params.maybe_param6 = command.param6;
+    cmd.params.maybe_param7 = command.param7;
+    
+    _system_impl->send_command_async(
+        cmd, [this, callback](MavlinkCommandSender::Result result, int) {
+            command_result_callback(result, callback);
+        });
+}
+
+void ActionImpl::send_command_async( const MavlinkPassthrough::CommandInt& command, const Action::ResultCallback& callback) const {
+
+    MavlinkCommandSender::CommandInt cmd{};
+    cmd.target_system_id = command.target_sysid;
+    cmd.target_component_id = command.target_compid;
+    cmd.command = command.command;
+    cmd.frame = command.frame;
+    cmd.params.maybe_param1 = command.param1;
+    cmd.params.maybe_param2 = command.param2;
+    cmd.params.maybe_param3 = command.param3;
+    cmd.params.maybe_param4 = command.param4;
+    cmd.params.x = command.x;
+    cmd.params.y = command.y;
+    cmd.params.maybe_z = command.z;
+
+    _system_impl->send_command_async(
+        cmd, [this, callback](MavlinkCommandSender::Result result, int) {
+            command_result_callback(result, callback);
+        });
 }
 
 Action::Result ActionImpl::action_result_from_command_result(MavlinkCommandSender::Result result)

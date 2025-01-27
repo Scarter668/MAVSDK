@@ -17,6 +17,10 @@
 
 #include "handle.h"
 
+
+#include <mavsdk/plugins/mavlink_passthrough/mavlink_passthrough.h>
+
+
 namespace mavsdk {
 
 class System;
@@ -27,6 +31,7 @@ class ActionImpl;
  */
 class Action : public PluginBase {
 public:
+    
     /**
      * @brief Constructor. Creates the plugin for a specific System.
      *
@@ -722,6 +727,17 @@ public:
      * @brief Equality operator (object is not copyable).
      */
     const Action& operator=(const Action&) = delete;
+
+
+    void send_command_async(
+        const MavlinkPassthrough::CommandLong& command,
+        const ResultCallback& callback) const;
+    
+    void send_command_async(
+        const MavlinkPassthrough::CommandInt& command,
+        const ResultCallback& callback) const;
+    
+    
 
 private:
     /** @private Underlying implementation, set at instantiation */

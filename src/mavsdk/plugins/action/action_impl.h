@@ -6,6 +6,9 @@
 #include <atomic>
 #include <cstdint>
 
+
+#include <mavsdk/plugins/mavlink_passthrough/mavlink_passthrough.h>
+
 namespace mavsdk {
 
 class ActionImpl : public PluginImplBase {
@@ -50,6 +53,15 @@ public:
     //Blocking 
     Action::Result set_flight_mode_auto() const;
     Action::Result set_flight_mode_guided() const;
+
+    // Async functions
+    void send_command_async(
+        const MavlinkPassthrough::CommandLong& command,
+        const Action::ResultCallback& callback) const;
+    void send_command_async(
+        const MavlinkPassthrough::CommandInt& command,
+        const Action::ResultCallback& callback) const;
+
 
     void arm_async(const Action::ResultCallback& callback) const;
     void arm_force_async(const Action::ResultCallback& callback) const;
