@@ -30,7 +30,8 @@ endforeach()
 ExternalProject_Add(
     jsoncpp
     GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp
-    GIT_TAG 1.9.5
+    GIT_TAG 1.9.6
     PREFIX jsoncpp
+    PATCH_COMMAND sed -i.bak "s/cmake_policy(VERSION [0-9.]*)/cmake_policy(VERSION 3.5)/" <SOURCE_DIR>/CMakeLists.txt || sed -i "" "s/cmake_policy(VERSION [0-9.]*)/cmake_policy(VERSION 3.5)/" <SOURCE_DIR>/CMakeLists.txt || true
     CMAKE_ARGS "${CMAKE_ARGS}"
     )
