@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.5)
 project(mavsdk_examples)
 
 # This allows to build all examples at once.

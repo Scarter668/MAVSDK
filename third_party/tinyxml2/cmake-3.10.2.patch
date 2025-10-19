@@ -9,8 +9,8 @@ index 8802fb8..e915c91 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1,4 +1,4 @@
--cmake_minimum_required(VERSION 3.15)
-+cmake_minimum_required(VERSION 3.10.2)
+-cmake_minimum_required(VERSION 3.5)
++cmake_minimum_required(VERSION 3.5)
  project(tinyxml2 VERSION 9.0.0)
  
  include(CTest)
@@ -95,8 +95,8 @@ index 5baa364..eecbb89 100644
 --- a/cmake/tinyxml2-config.cmake
 +++ b/cmake/tinyxml2-config.cmake
 @@ -1,4 +1,4 @@
--cmake_minimum_required(VERSION 3.15)
-+cmake_minimum_required(VERSION 3.10.2)
+-cmake_minimum_required(VERSION 3.5)
++cmake_minimum_required(VERSION 3.5)
  
  set(tinyxml2_known_comps static shared)
  set(tinyxml2_comp_static NO)

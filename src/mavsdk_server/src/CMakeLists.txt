@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.5)
 
 list(APPEND MAVSDK_SERVER_SOURCES
     mavsdk_server_api.h
