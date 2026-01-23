@@ -6,7 +6,6 @@
 #include <atomic>
 #include <cstdint>
 
-
 #include <mavsdk/plugins/mavlink_passthrough/mavlink_passthrough.h>
 
 namespace mavsdk {
@@ -50,9 +49,10 @@ public:
     Action::Result transition_to_fixedwing() const;
     Action::Result transition_to_multicopter() const;
 
-    //Blocking 
+    // Blocking
     Action::Result set_flight_mode_auto() const;
     Action::Result set_flight_mode_guided() const;
+    Action::Result set_flight_mode_autoland() const;
 
     // Async functions
     void send_command_async(
@@ -61,7 +61,6 @@ public:
     void send_command_async(
         const MavlinkPassthrough::CommandInt& command,
         const Action::ResultCallback& callback) const;
-
 
     void arm_async(const Action::ResultCallback& callback) const;
     void arm_force_async(const Action::ResultCallback& callback) const;
@@ -100,22 +99,19 @@ public:
     Action::Result set_takeoff_altitude(float relative_altitude_m);
     std::pair<Action::Result, float> get_takeoff_altitude() const;
 
-    void
-    set_maximum_speed_async(const int speed_m_s, const Action::ResultCallback& callback) const;
+    void set_maximum_speed_async(const int speed_m_s, const Action::ResultCallback& callback) const;
     void get_maximum_speed_async(const Action::GetSpeedCallback& callback) const;
 
     Action::Result set_maximum_speed(int speed_m_s) const;
     std::pair<Action::Result, int> get_maximum_speed() const;
 
-    void
-    set_minimum_speed_async(const int speed_m_s, const Action::ResultCallback& callback) const;
+    void set_minimum_speed_async(const int speed_m_s, const Action::ResultCallback& callback) const;
     void get_minimum_speed_async(const Action::GetSpeedCallback& callback) const;
 
     Action::Result set_minimum_speed(int speed_m_s) const;
     std::pair<Action::Result, int> get_minimum_speed() const;
 
-    void
-    set_target_speed_async(const int speed_m_s, const Action::ResultCallback& callback) const;
+    void set_target_speed_async(const int speed_m_s, const Action::ResultCallback& callback) const;
     void get_target_speed_async(const Action::GetSpeedCallback& callback) const;
 
     Action::Result set_target_speed(int speed_m_s) const;
@@ -159,9 +155,8 @@ private:
     static constexpr auto TAKEOFF_ALT_PARAM = "TKOFF_ALT";
     static constexpr auto MAX_SPEED_PARAM = "AIRSPEED_MAX"; // range 5 - 100
     static constexpr auto MIN_SPEED_PARAM = "AIRSPEED_MIN"; // range 5 - 100
-    
+
     static constexpr auto TARGET_SPEED_PARAM = "AIRSPEED_CRUISE"; // m/s
-    
 
     static constexpr auto RTL_RETURN_ALTITUDE_PARAM = "RTL_ALTITUDE"; // m
 };

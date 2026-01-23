@@ -188,10 +188,11 @@ void SystemImpl::register_statustext_handler(
 void SystemImpl::unregister_statustext_handler(void* cookie)
 {
     std::lock_guard<std::mutex> lock(_statustext_handler_callbacks_mutex);
-    _statustext_handler_callbacks.erase(std::remove_if(
-        _statustext_handler_callbacks.begin(),
-        _statustext_handler_callbacks.end(),
-        [&](const auto& entry) { return entry.cookie == cookie; }));
+    _statustext_handler_callbacks.erase(
+        std::remove_if(
+            _statustext_handler_callbacks.begin(),
+            _statustext_handler_callbacks.end(),
+            [&](const auto& entry) { return entry.cookie == cookie; }));
 }
 
 void SystemImpl::process_heartbeat(const mavlink_message_t& message)
@@ -936,6 +937,8 @@ ardupilot::PlaneMode SystemImpl::flight_mode_to_ardupilot_plane_mode(FlightMode 
             return ardupilot::PlaneMode::Loiter;
         case FlightMode::ReturnToLaunch:
             return ardupilot::PlaneMode::Rtl;
+        case FlightMode::Land:
+            return ardupilot::PlaneMode::Autoland; // Land mode maps to AUTOLAND for ArduPilot Plane
         case FlightMode::Manual:
             return ardupilot::PlaneMode::Manual;
         case FlightMode::FBWA:

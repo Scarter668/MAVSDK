@@ -17,9 +17,7 @@
 
 #include "handle.h"
 
-
 #include <mavsdk/plugins/mavlink_passthrough/mavlink_passthrough.h>
-
 
 namespace mavsdk {
 
@@ -31,7 +29,6 @@ class ActionImpl;
  */
 class Action : public PluginBase {
 public:
-    
     /**
      * @brief Constructor. Creates the plugin for a specific System.
      *
@@ -440,10 +437,10 @@ public:
      */
     Result hold() const;
 
-
-    //Blocking 
+    // Blocking
     Action::Result set_flight_mode_auto() const;
     Action::Result set_flight_mode_guided() const;
+    Action::Result set_flight_mode_autoland() const;
     /**
      * @brief Send command to set the value of an actuator.
      *
@@ -563,8 +560,6 @@ public:
      */
     void get_maximum_speed_async(const GetSpeedCallback callback);
 
-
-
     /**
      * @brief Get the vehicle maximum speed (in metres/second).
      *
@@ -574,13 +569,13 @@ public:
      */
     std::pair<Result, float> get_maximum_speed() const;
 
-     /**
+    /**
      * @brief Get the vehicle minimum speed (in metres/second).
      *
      * This function is non-blocking. See 'get_minimum_speed' for the blocking counterpart.
      */
     void get_minimum_speed_async(const GetSpeedCallback callback);
-    
+
     /**
      * @brief Get the vehicle minimum speed (in metres/second).
      *
@@ -605,7 +600,7 @@ public:
      * @return Result of request.
      */
     Result set_maximum_speed(float speed) const;
-    
+
     /**
      * @brief Set vehicle minimum speed (in metres/second).
      *
@@ -638,13 +633,13 @@ public:
      */
     Result set_target_speed(float speed) const;
 
-     /**
+    /**
      * @brief Get the vehicle target speed (in metres/second).
      *
      * This function is non-blocking. See 'get_target_speed' for the blocking counterpart.
      */
     void get_target_speed_async(const GetSpeedCallback callback);
-    
+
     /**
      * @brief Get the vehicle target speed (in metres/second).
      *
@@ -728,16 +723,11 @@ public:
      */
     const Action& operator=(const Action&) = delete;
 
+    void send_command_async(
+        const MavlinkPassthrough::CommandLong& command, const ResultCallback& callback) const;
 
     void send_command_async(
-        const MavlinkPassthrough::CommandLong& command,
-        const ResultCallback& callback) const;
-    
-    void send_command_async(
-        const MavlinkPassthrough::CommandInt& command,
-        const ResultCallback& callback) const;
-    
-    
+        const MavlinkPassthrough::CommandInt& command, const ResultCallback& callback) const;
 
 private:
     /** @private Underlying implementation, set at instantiation */

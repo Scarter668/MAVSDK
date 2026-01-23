@@ -75,6 +75,7 @@ enum class PlaneMode {
     QAutotune = 22,
     QAcro = 23,
     Thermal = 24,
+    Autoland = 26,
     Unknown = 100
 };
 

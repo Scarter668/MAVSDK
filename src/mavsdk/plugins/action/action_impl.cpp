@@ -550,8 +550,9 @@ Action::Result ActionImpl::set_flight_mode_auto() const
     auto prom = std::promise<Action::Result>();
     auto fut = prom.get_future();
 
-    mavsdk::MavlinkCommandSender::Result command_result = _system_impl->set_flight_mode(FlightMode::Mission); // Mission is the ardupilot auto mode 
-    
+    mavsdk::MavlinkCommandSender::Result command_result =
+        _system_impl->set_flight_mode(FlightMode::Mission); // Mission is the ardupilot auto mode
+
     return action_result_from_command_result(command_result);
 }
 
@@ -560,8 +561,19 @@ Action::Result ActionImpl::set_flight_mode_guided() const
     auto prom = std::promise<Action::Result>();
     auto fut = prom.get_future();
 
-    mavsdk::MavlinkCommandSender::Result command_result = _system_impl->set_flight_mode(FlightMode::Offboard); // Offboard is the ardupilot guided mode
-    
+    mavsdk::MavlinkCommandSender::Result command_result = _system_impl->set_flight_mode(
+        FlightMode::Offboard); // Offboard is the ardupilot guided mode
+
+    return action_result_from_command_result(command_result);
+}
+
+Action::Result ActionImpl::set_flight_mode_autoland() const
+{
+    // AUTOLAND mode for ArduPilot Plane (mode 26)
+    // Use FlightMode::Land which maps to AUTOLAND for ArduPilot Plane
+    mavsdk::MavlinkCommandSender::Result command_result =
+        _system_impl->set_flight_mode(FlightMode::Land);
+
     return action_result_from_command_result(command_result);
 }
 
@@ -756,7 +768,7 @@ void ActionImpl::get_maximum_speed_async(const Action::GetSpeedCallback& callbac
     callback(speed_result.first, speed_result.second);
 }
 
-std::pair<Action::Result,int> ActionImpl::get_maximum_speed() const
+std::pair<Action::Result, int> ActionImpl::get_maximum_speed() const
 {
     auto result = _system_impl->get_param_int(MAX_SPEED_PARAM);
     return std::make_pair<>(
@@ -785,7 +797,7 @@ void ActionImpl::get_minimum_speed_async(const Action::GetSpeedCallback& callbac
     callback(speed_result.first, speed_result.second);
 }
 
-std::pair<Action::Result,int> ActionImpl::get_minimum_speed() const
+std::pair<Action::Result, int> ActionImpl::get_minimum_speed() const
 {
     auto result = _system_impl->get_param_int(MIN_SPEED_PARAM);
     return std::make_pair<>(
@@ -811,10 +823,10 @@ Action::Result ActionImpl::set_target_speed(int speed_m_s) const
 void ActionImpl::get_target_speed_async(const Action::GetSpeedCallback& callback) const
 {
     auto speed_result = get_target_speed();
-    callback(speed_result.first, speed_result.second );
+    callback(speed_result.first, speed_result.second);
 }
 
-std::pair<Action::Result,float> ActionImpl::get_target_speed() const
+std::pair<Action::Result, float> ActionImpl::get_target_speed() const
 {
     auto result = _system_impl->get_param_float(TARGET_SPEED_PARAM);
     return std::make_pair<>(
@@ -870,7 +882,6 @@ void ActionImpl::set_current_speed_async(int speed_m_s, const Action::ResultCall
         });
 }
 
-
 Action::Result ActionImpl::set_current_speed(int speed_m_s)
 {
     auto prom = std::promise<Action::Result>();
@@ -881,28 +892,30 @@ Action::Result ActionImpl::set_current_speed(int speed_m_s)
     return fut.get();
 }
 
-void ActionImpl::send_command_async( const MavlinkPassthrough::CommandLong& command, const Action::ResultCallback& callback) const{
-    
+void ActionImpl::send_command_async(
+    const MavlinkPassthrough::CommandLong& command, const Action::ResultCallback& callback) const
+{
     MavlinkCommandSender::CommandLong cmd{};
     cmd.target_system_id = command.target_sysid;
     cmd.target_component_id = command.target_compid;
     cmd.command = command.command;
-    cmd.params.maybe_param1 = command.param1; 
+    cmd.params.maybe_param1 = command.param1;
     cmd.params.maybe_param2 = command.param2;
     cmd.params.maybe_param3 = command.param3;
     cmd.params.maybe_param4 = command.param4;
     cmd.params.maybe_param5 = command.param5;
     cmd.params.maybe_param6 = command.param6;
     cmd.params.maybe_param7 = command.param7;
-    
+
     _system_impl->send_command_async(
         cmd, [this, callback](MavlinkCommandSender::Result result, int) {
             command_result_callback(result, callback);
         });
 }
 
-void ActionImpl::send_command_async( const MavlinkPassthrough::CommandInt& command, const Action::ResultCallback& callback) const {
-
+void ActionImpl::send_command_async(
+    const MavlinkPassthrough::CommandInt& command, const Action::ResultCallback& callback) const
+{
     MavlinkCommandSender::CommandInt cmd{};
     cmd.target_system_id = command.target_sysid;
     cmd.target_component_id = command.target_compid;

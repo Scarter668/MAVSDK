@@ -9,17 +9,17 @@
 
 namespace mavsdk {
 
-
-void Action::send_command_async( const MavlinkPassthrough::CommandLong& command, const ResultCallback& callback) const{
-
-    _impl->send_command_async(command, callback);
-}   
-
-void Action::send_command_async( const MavlinkPassthrough::CommandInt& command, const ResultCallback& callback) const {
-
+void Action::send_command_async(
+    const MavlinkPassthrough::CommandLong& command, const ResultCallback& callback) const
+{
     _impl->send_command_async(command, callback);
 }
 
+void Action::send_command_async(
+    const MavlinkPassthrough::CommandInt& command, const ResultCallback& callback) const
+{
+    _impl->send_command_async(command, callback);
+}
 
 Action::Action(System& system) : PluginBase(), _impl{std::make_unique<ActionImpl>(system)} {}
 
@@ -187,12 +187,19 @@ Action::Result Action::hold() const
     return _impl->hold();
 }
 
-//Blocking 
-Action::Result Action::set_flight_mode_auto() const{
-   return _impl->set_flight_mode_auto();
+// Blocking
+Action::Result Action::set_flight_mode_auto() const
+{
+    return _impl->set_flight_mode_auto();
 }
-Action::Result Action::set_flight_mode_guided() const {
+Action::Result Action::set_flight_mode_guided() const
+{
     return _impl->set_flight_mode_guided();
+}
+
+Action::Result Action::set_flight_mode_autoland() const
+{
+    return _impl->set_flight_mode_autoland();
 }
 
 void Action::set_actuator_async(int32_t index, float value, const ResultCallback callback)
@@ -303,7 +310,6 @@ Action::Result Action::set_target_speed(float speed) const
 {
     return _impl->set_target_speed(speed);
 }
-
 
 void Action::get_return_to_launch_altitude_async(const GetReturnToLaunchAltitudeCallback callback)
 {
